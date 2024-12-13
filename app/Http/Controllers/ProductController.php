@@ -12,28 +12,25 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with(['category', 'tags'])->get();
+        $products = Product::with(['category'])->get();
         return response()->json($products, 200);
     }
 
     public function store(Request $request)
     {
-        return "HOAL";
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'required|string',
             'category_id' => 'required|exists:categories,id',
-            'tags' => 'array',
-            'tags.*' => 'exists:tags,id',
+            'price' => 'required',
         ]);
 
         $product = Product::create([
             'name' => $validated['name'],
             'category_id' => $validated['category_id'],
+            'image' => $validated['image'],
+            'price' => $validated['price'],
         ]);
-
-        if (isset($validated['tags'])) {
-            $product->tags()->attach($validated['tags']);
-        }
 
         return response()->json(['message' => 'Product created successfully!', 'product' => $product], 201);
     }

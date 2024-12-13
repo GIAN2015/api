@@ -11,9 +11,8 @@ class Category extends Model
     use HasFactory;
 
     // Define los campos que pueden ser asignados masivamente
-    protected $fillable = [
-        'name', // Aquí puedes añadir más campos si los tienes en la migración
-    ];
+    protected $fillable = ['name', 'description'];
+
     public function products()
 {
     return $this->hasMany(Product::class);

@@ -20,7 +20,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255', // Validar nombre
         ]);
-
+        // return  $request->all();
         $category = Category::create($request->all());
         return response()->json(['message' => 'Category created successfully!', 'category' => $category], 201);
     }

@@ -10,16 +10,17 @@ class Product extends Model
     use HasFactory;
 
     // Define los campos que pueden ser asignados masivamente
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'price', 'image', 'category_id'];
+
+    // Relación con la categoría
     public function category()
-{
-    return $this->belongsTo(Category::class);
-}
+    {
+        return $this->belongsTo(Category::class);
+    }
 
-public function tags()
-{
-    return $this->belongsToMany(Tag::class, 'product_tag', 'product_id', 'tag_id');
-}
-
-
+    // // Relación con las etiquetas (tags)
+    // public function tags()
+    // {
+    //     return $this->belongsToMany(Tag::class, 'product_tag', 'product_id', 'tag_id');
+    // }
 }
