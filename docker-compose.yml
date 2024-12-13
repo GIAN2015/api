@@ -1,0 +1,30 @@
+version: "2"
+services:
+    mysql_db:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: .Chapitec2024.
+            MYSQL_DATABASE: chapo
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - 5050:3306
+        networks:
+            - laravel-docker
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        ports:
+            - 9001:80
+        environment:
+            - PMA_ARBITRARY=1
+        networks:
+            - laravel-docker
+
+volumes:
+    mysql_data:
+        external: true
+
+networks:
+    laravel-docker:
+        external: true

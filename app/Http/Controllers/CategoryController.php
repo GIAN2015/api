@@ -7,50 +7,45 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    // Obtener todas las categorías
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        return response()->json($categories, 200); // Devolver categorías en formato JSON
     }
 
-    public function create()
-    {
-        return view('categories.create');
-    }
-
+    // Crear una nueva categoría
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255', // Validar nombre
         ]);
 
-        Category::create($request->all());
-        return redirect()->route('categories.index');
+        $category = Category::create($request->all());
+        return response()->json(['message' => 'Category created successfully!', 'category' => $category], 201);
     }
 
+    // Mostrar una categoría específica
     public function show(Category $category)
     {
-        return view('categories.show', compact('category'));
+        return response()->json($category, 200); // Devolver categoría en formato JSON
     }
 
-    public function edit(Category $category)
-    {
-        return view('categories.edit', compact('category'));
-    }
-
+    // Actualizar una categoría
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255', // Validar nombre
         ]);
 
         $category->update($request->all());
-        return redirect()->route('categories.index');
+        return response()->json(['message' => 'Category updated successfully!', 'category' => $category], 200);
     }
 
+    // Eliminar una categoría
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index');
+        return response()->json(['message' => 'Category deleted successfully!'], 200);
     }
 }
